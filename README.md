@@ -1,6 +1,10 @@
 #     بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
 Thanks to Allah for supporting this Project. 
 
+Crafted with 💙 by [Herlangga Sefani](https://www.facebook.com/herlangga.sefani)
+
+Github repository : https://github.com/gaibz/KeyOS-sdk-javascript 
+
 # KeyOS API SDK For Javascript 
 
 
@@ -8,18 +12,21 @@ Thanks to Allah for supporting this Project.
 
     npm install @keyos/api-sdk  
 
+## API Documentation
+Complete api documentation can be found on [KeyoS Documentation API](https://doc.keyos.id/shelves/api-documentation) 
+
+
 ## Usage & Example REST
 
 ### Initialization
 
     const { Rest } = require("@keyos/api-sdk");
-    let apiPath = Rest.apiPath;
     let RestApi = new Rest.Api();
  
 ### Example : Search City or Subdistrict
-documentation can be found in : [KeyOS Documentation](https://doc.keyos.id/books/rest-api/page/search-city-subdistrict)
+documentation can be found in : [KeyOS Documentation City or Subdistrict](https://doc.keyos.id/books/rest-api/page/search-city-subdistrict)
 
-    RestApi.action('GET', apiPath.location_city_or_subdistrict, {
+    RestApi.action('GET', 'location/city_or_subdistrict', {
         q : "tasikmalaya" // q is the request parameter, see doc
     }).then((response) => {
         // if request success this code will firing
@@ -38,7 +45,3 @@ documentation can be found in : [KeyOS Documentation](https://doc.keyos.id/books
     });
      
      
-
-Crafted with 💙 by [Herlangga Sefani](https://www.facebook.com/herlangga.sefani)
-
-Github repository : https://github.com/gaibz/KeyOS-sdk-javascript 
