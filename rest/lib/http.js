@@ -5,6 +5,7 @@
 'use strict';
 
 const Axios = require("axios");
+const querystring = require("querystring");
 
 /**
  * Http class for calling to keyos server
@@ -46,44 +47,38 @@ class Http {
     }
 
     /**
-     * Get HTTP Driver / Axios instance
-     *
-     * @returns {AxiosInstance}
-     */
-    _getDriver() {
-        let headers = {};
-
-        if(this.api_key) {
-            headers.key = this.api_key
-        }
-
-        return Axios.create({
-            baseURL : this.base_api_url,
-            timeout : 10000,
-            headers,
-        });
-    }
-
-    /**
      * call http api with defined method
      *
      * @param method string GET,POST,PUT,PATCH,DELETE
      * @param path string path
-     * @param query object of query string parameter
-     * @param body object of request body
+     * @param request_parameter
+     * @param request_body
      */
-    action(method, path="", query = {}, body = {}) {
+    action(method, path="", request_parameter = {}, request_body = {}) {
         this.setPath(path);
         return new Promise((resolve, reject) => {
-            let driver = this._getDriver();
+            let headers = {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/x-www-form-urlencoded',
+                'Accept-Encoding': 'gzip, deflate, br'
+            };
+
+            if(this.api_key) {
+                headers.key = this.api_key
+            }
+
             let config = {
+                baseURL : this.base_api_url,
+                timeout : 10000,
+                headers,
                 url: this.path,
                 method: method,
-                params: query,
-                data: body,
+                params: request_parameter,
+                data: querystring.stringify(request_body),
                 responseType: 'json'
             };
-            driver.request(config).then((response) => {
+
+            Axios(config).then((response) => {
                 this._processResponse(response, resolve, reject);
             }).catch((error) => {
                 this._processError(error, reject);
@@ -157,7 +152,7 @@ class Http {
         if(err.body === '') {
             err.body = {
                 success: false,
-                message: "Not Found",
+                message: "Something goes wrong",
             }
         }
 

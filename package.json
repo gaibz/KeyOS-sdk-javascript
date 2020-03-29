@@ -1,6 +1,6 @@
 {
   "name": "@keyos/api-sdk",
-  "version": "0.0.0-alpha1",
+  "version": "0.0.0-alpha2",
   "description": "KeyOS API SDK For Javascript",
   "main": "index.js",
   "scripts": {
