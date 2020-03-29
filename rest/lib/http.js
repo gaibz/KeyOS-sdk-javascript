@@ -139,8 +139,19 @@ class Http {
                 text: error.response.statusText,
             },
             body: error.response.data,
+            
             _request: error.response.request,
             _headers: error.response.headers,
+
+            getBody: function(){
+                return this.body;
+            },
+            getStatusCode: function(){
+                return this.status.code;
+            },
+            getStatusText: function(){
+                return this.status.text;
+            }
         };
 
         if(err.body === '') {

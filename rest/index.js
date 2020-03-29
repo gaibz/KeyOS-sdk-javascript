@@ -1,6 +1,12 @@
-const Http = require("./lib/http");
+/**
+ * @author : Herlangga Sefani <https://github.com/gaibz>
+ */
+
+'use strict';
+
+const Api = require("./lib/http");
 const apiPath = require("./lib/apipath");
 
 module.exports = {
-    Http, apiPath
+    Api, apiPath
 };

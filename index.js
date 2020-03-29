@@ -1,3 +1,5 @@
+'use strict';
+
 const Rest = require("./rest");
 
 module.exports = {
