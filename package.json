@@ -1,0 +1,20 @@
+{
+  "name": "@keyos/api-sdk",
+  "version": "1.0.0-alpha",
+  "description": "KeyOS API SDK For Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "keyos",
+    "sdk",
+    "javascript",
+    "gaibz"
+  ],
+  "author": "Herlangga Sefani <https://github.com/gaibz>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
