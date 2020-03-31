@@ -66,3 +66,55 @@ RestApi.call(request).then((response) => {
     console.log(error);
 });
 ``` 
+
+
+### Example POST Request : Login / Auth
+
+documentation can be found in : [KeyOS Documentation Admin Login](https://doc.keyos.id/books/rest-api/page/admin-authentication)
+
+```javascript
+// we will pass the third parameter since we dont have to specify query parameter
+// the fourth parameter is the request body
+RestApi.action('POST', 'auth', {}, {
+    username : '<some_admin_username>',
+    password : '<some_admin_password>',
+    roles : 'ADMIN'
+}).then((response) => {
+    // if request success this code will firing
+    // response.getStatusCode() for get status code
+    // response.getStatusText() for get status text
+    // response.getBody() for get response body
+    console.log({response});
+}).catch((error) => {
+    // in case we have some error
+    // error.getStatusCode() for get status code
+    // error.getStatusText() for get status text
+    // error.getBody() for get response body
+    console.log({error});
+}).finally(() => {
+    // this block is optional, and will fired after then and catch finished
+});
+```
+
+Object Oriented Style : 
+```javascript
+let request = new Rest.ApiRequest();
+// method chaining style
+request.setPath('location/city_or_subdistrict')
+.setMethod(Rest.METHOD.GET)
+.setRequestBody({
+    username : '<some_admin_username>',
+    password : '<some_admin_password>',
+    roles : 'ADMIN'
+});
+
+RestApi.call(request).then((response) => {
+    console.log({response});
+}).catch((error) => {
+    console.log("error");
+    console.log(error);
+}).finally(() => {
+    // This block is optional and will firing after then and catch executed
+    // normally this is promise based
+});
+```
