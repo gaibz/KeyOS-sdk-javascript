@@ -1,3 +1,5 @@
+# KeyOS API SDK For Javascript 
+
 <h1 align="right">     بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم </h1>
 
 Thanks to Allah for supporting this Project. 
@@ -6,7 +8,7 @@ Crafted with 💙 by [Herlangga Sefani](https://www.facebook.com/herlangga.sefan
 
 Github repository : https://github.com/gaibz/KeyOS-sdk-javascript 
 
-# KeyOS API SDK For Javascript 
+Project started at end of March 2020
 
 
 ## Installation 
