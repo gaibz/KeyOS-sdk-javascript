@@ -26,7 +26,7 @@ const { Rest } = require("@keyos/api-sdk");
 let RestApi = new Rest.Api();
 ```
  
-### Example : Search City or Subdistrict
+### Example GET Request : Search City or Subdistrict
 documentation can be found in : [KeyOS Documentation City or Subdistrict](https://doc.keyos.id/books/rest-api/page/search-city-subdistrict)
 
 ```javascript
@@ -48,3 +48,19 @@ RestApi.action('GET', 'location/city_or_subdistrict', {
     // this block is optional, and will fired after then and catch finished
 });
 ```
+
+If you want some more Object Oriented way (This will also trigger autocompletion if your text editor support it) : 
+
+```javascript
+let request = new Rest.ApiRequest();
+request.setPath('location/city_or_subdistrict')
+    .setMethod(Rest.METHOD.GET)
+    .setRequestQuery({q : 'tasikmalaya'});
+
+RestApi.call(request).then((response) => {
+    console.log({response});
+}).catch((error) => {
+    console.log("error");
+    console.log(error);
+});
+``` 

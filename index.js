@@ -1,6 +1,6 @@
 'use strict';
 
-const Rest = require("./rest");
+const Rest = require("./dist");
 
 module.exports = {
     Rest
