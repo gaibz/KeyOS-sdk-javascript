@@ -106,6 +106,7 @@ class Api {
      * @param request_body
      */
     public action(method : METHOD, path : string ="", request_parameter : object = {}, request_body : object = {}) : any{
+        // @ts-ignore
         return new Promise<any>((resolve : any, reject:any) => {
             let headers = {
                 'Accept' : 'application/json',
@@ -143,6 +144,7 @@ class Api {
      * @param request
      */
     public call(request : ApiRequest) : Promise<any>{
+        // @ts-ignore
         return new Promise<any>((resolve:any, reject:any) => {
             axios(request.getConfig()).then((response:any) => {
                 this._processResponse(response, resolve, reject);

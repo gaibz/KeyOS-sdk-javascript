@@ -119,6 +119,7 @@ var Api = /** @class */ (function () {
             if (path === void 0) { path = ""; }
             if (request_parameter === void 0) { request_parameter = {}; }
             if (request_body === void 0) { request_body = {}; }
+            // @ts-ignore
             return new Promise(function (resolve, reject) {
                 var headers = {
                     'Accept': 'application/json',
@@ -158,6 +159,7 @@ var Api = /** @class */ (function () {
         writable: true,
         value: function (request) {
             var _this = this;
+            // @ts-ignore
             return new Promise(function (resolve, reject) {
                 axios(request.getConfig()).then(function (response) {
                     _this._processResponse(response, resolve, reject);

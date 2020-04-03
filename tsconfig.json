@@ -14,13 +14,13 @@
     "useDefineForClassFields": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
-//    "declaration": true,
+    "declaration": true,
     "watch": true,
     "lib": [
       "dom",
       "es5",
-      "scripthost",
-      "es2015.promise"
+      "scripthost"
+//      "es2015.promise"
     ]
   },
   "include": [
