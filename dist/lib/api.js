@@ -61,6 +61,7 @@ var Api = /** @class */ (function () {
         configurable: true,
         writable: true,
         value: function (error, reject) {
+            error.response = error.response || {};
             var err = {
                 status: {
                     code: error.response.status || null,
