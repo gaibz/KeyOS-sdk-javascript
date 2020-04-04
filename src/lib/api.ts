@@ -24,13 +24,13 @@ class Api {
     private _processResponse(response:any, resolve:any, reject:any) : void{
         let resp = {
             status : {
-                code : response.status,
-                text : response.statusText
+                code : response.status || null,
+                text : response.statusText || null
             },
-            body: response.data,
+            body: response.data || null,
 
-            _request: response.request,
-            _headers: response.headers,
+            _request: response.request || null,
+            _headers: response.headers || null,
 
             getBody: function(){
                 return this.body;
@@ -58,13 +58,13 @@ class Api {
     private _processError(error:any, reject:any) : void {
         let err = {
             status : {
-                code: error.response.status,
-                text: error.response.statusText,
+                code: error.response.status || null,
+                text: error.response.statusText || null,
             },
-            body: error.response.data,
+            body: error.response.data || null,
 
-            _request: error.response.request,
-            _headers: error.response.headers,
+            _request: error.response.request || null,
+            _headers: error.response.headers || null,
 
             getBody: function(){
                 return this.body;
