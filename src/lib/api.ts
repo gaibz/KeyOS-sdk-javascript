@@ -9,6 +9,7 @@ import {AxiosPromise} from "axios";
 
 const axios = mod.axios;
 
+
 class Api {
 
     private api_key : string = "";
@@ -56,6 +57,8 @@ class Api {
      * @param reject
      */
     private _processError(error:any, reject:any) : void {
+        error.response = error.response || {};
+        
         let err = {
             status : {
                 code: error.response.status || null,
