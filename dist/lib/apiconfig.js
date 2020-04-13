@@ -52,6 +52,12 @@ var ApiConfig = /** @class */ (function () {
             writable: true,
             value: 10000
         }); // 10 seconds
+        Object.defineProperty(this, "onUploadProgress", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () { }
+        });
     }
     return ApiConfig;
 }());

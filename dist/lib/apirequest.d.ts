@@ -9,6 +9,8 @@ declare class ApiRequest {
     private _api_key;
     private _body;
     private _query;
+    private _form_type;
+    private _on_upload_progress;
     /**
      * format any object into query string eg : {a:"b", c:"d"} will be a=b&c=d
      * @param data
@@ -24,7 +26,12 @@ declare class ApiRequest {
      * set request body for this api call
      * @param body object {key:value}
      */
-    setRequestBody(body: object): this;
+    setRequestBody(body: any): this;
+    /**
+     * Set form data (for upload purposes)
+     * @param data
+     */
+    setFormData(data: FormData): this;
     /**
      * set method for this api call
      * @param method
@@ -40,6 +47,10 @@ declare class ApiRequest {
      * @param api_key
      */
     setApiKey(api_key: string): this;
+    /**
+     * on upload progress
+     */
+    onUploadProgress(cb: any): this;
     /**
      * Get Config for fetch data
      */

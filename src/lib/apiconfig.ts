@@ -7,12 +7,12 @@ class ApiConfig {
 
     public method : string = "";
     public headers : object = {};
-    public data : string = "";
+    public data : any = "";
     public params : object = {};
     public url : string = "";
     public responseType : string = "";
     public timeout : number = 10000; // 10 seconds
-
+    public onUploadProgress : any = () => {};
 }
 
 export = ApiConfig;

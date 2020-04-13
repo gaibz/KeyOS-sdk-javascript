@@ -36,6 +36,18 @@ var ApiRequest = /** @class */ (function () {
             writable: true,
             value: {}
         });
+        Object.defineProperty(this, "_form_type", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: "application/x-www-form-urlencoded"
+        });
+        Object.defineProperty(this, "_on_upload_progress", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () { }
+        });
     }
     /**
      * format any object into query string eg : {a:"b", c:"d"} will be a=b&c=d
@@ -73,6 +85,20 @@ var ApiRequest = /** @class */ (function () {
         writable: true,
         value: function (body) {
             this._body = body;
+            return this;
+        }
+    });
+    /**
+     * Set form data (for upload purposes)
+     * @param data
+     */
+    Object.defineProperty(ApiRequest.prototype, "setFormData", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (data) {
+            this._form_type = 'multipart/form-data';
+            this._body = data;
             return this;
         }
     });
@@ -116,6 +142,18 @@ var ApiRequest = /** @class */ (function () {
         }
     });
     /**
+     * on upload progress
+     */
+    Object.defineProperty(ApiRequest.prototype, "onUploadProgress", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (cb) {
+            this._on_upload_progress = cb;
+            return this;
+        }
+    });
+    /**
      * Get Config for fetch data
      */
     Object.defineProperty(ApiRequest.prototype, "getConfig", {
@@ -126,14 +164,25 @@ var ApiRequest = /** @class */ (function () {
             var headers = {
                 'key': this._api_key,
                 'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': this._form_type
             };
             var apiConfig = new ApiConfig();
             apiConfig.url = this._path;
             apiConfig.method = this._method;
             apiConfig.headers = headers;
-            apiConfig.data = this._toQueryString(this._body);
+            if (this._form_type !== 'multipart/form-data') {
+                if (typeof this._body === 'object') {
+                    apiConfig.data = this._toQueryString(this._body);
+                }
+                else if (typeof this._body === 'string') {
+                    apiConfig.data = this._body;
+                }
+            }
+            else {
+                apiConfig.data = this._body;
+            }
             apiConfig.params = this._query;
+            apiConfig.onUploadProgress = this._on_upload_progress;
             return apiConfig;
         }
     });

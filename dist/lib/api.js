@@ -80,11 +80,21 @@ var Api = /** @class */ (function () {
                     return this.status.text;
                 }
             };
-            if (err.body === '') {
-                err.body = {
-                    success: false,
-                    message: "Something goes wrong",
-                };
+            if (!err.body) {
+                if (err.status.code === 404) {
+                    err.body = {
+                        success: false,
+                        message: "Not Found",
+                        error_code: "not_found"
+                    };
+                }
+                else {
+                    err.body = {
+                        success: false,
+                        message: "Something goes wrong",
+                        error_code: "something_goes_wrong"
+                    };
+                }
             }
             reject(err);
         }
