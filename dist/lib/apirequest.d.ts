@@ -9,6 +9,7 @@ declare class ApiRequest {
     private _api_key;
     private _body;
     private _query;
+    private _headers;
     private _form_type;
     private _on_upload_progress;
     /**
@@ -17,6 +18,11 @@ declare class ApiRequest {
      * @private
      */
     private _toQueryString;
+    /**
+     * set request headers
+     * @param headers
+     */
+    setHeaders(headers: object): this;
     /**
      * set path for api call
      * @param path

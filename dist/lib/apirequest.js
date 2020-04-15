@@ -36,6 +36,12 @@ var ApiRequest = /** @class */ (function () {
             writable: true,
             value: {}
         });
+        Object.defineProperty(this, "_headers", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: {}
+        });
         Object.defineProperty(this, "_form_type", {
             enumerable: true,
             configurable: true,
@@ -60,6 +66,19 @@ var ApiRequest = /** @class */ (function () {
         writable: true,
         value: function (data) {
             return Object.keys(data).map(function (key) { return key + "=" + encodeURIComponent(data[key]); }).join('&');
+        }
+    });
+    /**
+     * set request headers
+     * @param headers
+     */
+    Object.defineProperty(ApiRequest.prototype, "setHeaders", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (headers) {
+            this._headers = headers;
+            return this;
         }
     });
     /**
@@ -161,11 +180,17 @@ var ApiRequest = /** @class */ (function () {
         configurable: true,
         writable: true,
         value: function () {
+            var _this = this;
             var headers = {
                 'key': this._api_key,
                 'Accept': 'application/json',
                 'Content-Type': this._form_type
             };
+            Object.keys(this._headers).forEach(function (key) {
+                // dont know why this getting error ??
+                // @ts-ignore
+                headers[key] = _this._headers[key];
+            });
             var apiConfig = new ApiConfig();
             apiConfig.url = this._path;
             apiConfig.method = this._method;

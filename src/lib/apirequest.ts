@@ -12,8 +12,9 @@ class ApiRequest {
     private _path : string = "";
     private _api_key : string = "";
 
-    private _body : object = {};
+    private _body : any = {};
     private _query = {};
+    private _headers : object = {};
 
     private _form_type: string = "application/x-www-form-urlencoded";
     private _on_upload_progress : any = () => {};
@@ -25,6 +26,15 @@ class ApiRequest {
      */
     private _toQueryString(data : any) : string {
         return Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
+    }
+
+    /**
+     * set request headers
+     * @param headers
+     */
+    public setHeaders(headers : object) : this {
+        this._headers = headers;
+        return this;
     }
 
     /**
@@ -99,6 +109,12 @@ class ApiRequest {
             'Accept' : 'application/json',
             'Content-Type' : this._form_type
         };
+
+        Object.keys(this._headers).forEach((key) => {
+            // dont know why this getting error ??
+            // @ts-ignore
+            headers[key] = this._headers[key];
+        });
 
         let apiConfig = new ApiConfig();
         apiConfig.url = this._path;
