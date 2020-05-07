@@ -13,6 +13,10 @@ class ApiConfig {
     public responseType : string = "";
     public timeout : number = 10000; // 10 seconds
     public onUploadProgress : any = () => {};
+
+    constructor(baseUrl : string = '') {
+        this.baseURL = baseUrl || this.baseURL;
+    }
 }
 
 export = ApiConfig;

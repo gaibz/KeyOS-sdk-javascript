@@ -3,11 +3,11 @@
  */
 
 import ApiConfig = require('./apiconfig');
-import METHOD = require('./method.enum');
 
 class ApiRequest {
+    private _base_url = '';
 
-    private _method : METHOD = METHOD.GET;
+    private _method : string = "GET";
 
     private _path : string = "";
     private _api_key : string = "";
@@ -47,6 +47,16 @@ class ApiRequest {
     }
 
     /**
+     * Set Base URL For this API
+     *
+     * @param url
+     */
+    public setBaseURL(url:string) : this {
+        this._base_url = url;
+        return this;
+    }
+
+    /**
      * set request body for this api call
      * @param body object {key:value}
      */
@@ -69,7 +79,7 @@ class ApiRequest {
      * set method for this api call
      * @param method
      */
-    public setMethod(method:METHOD) : this {
+    public setMethod(method:string) : this {
         this._method = method;
         return this;
     }
@@ -116,7 +126,7 @@ class ApiRequest {
             headers[key] = this._headers[key];
         });
 
-        let apiConfig = new ApiConfig();
+        let apiConfig = new ApiConfig(this._base_url);
         apiConfig.url = this._path;
         apiConfig.method = this._method;
         apiConfig.headers = headers;

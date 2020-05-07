@@ -11,5 +11,6 @@ declare class ApiConfig {
     responseType: string;
     timeout: number;
     onUploadProgress: any;
+    constructor(baseUrl?: string);
 }
 export = ApiConfig;

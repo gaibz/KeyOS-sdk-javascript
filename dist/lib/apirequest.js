@@ -3,14 +3,19 @@
  * @author : Herlangga Sefani <https://github.com/gaibz>
  */
 var ApiConfig = require("./apiconfig");
-var METHOD = require("./method.enum");
 var ApiRequest = /** @class */ (function () {
     function ApiRequest() {
+        Object.defineProperty(this, "_base_url", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: ''
+        });
         Object.defineProperty(this, "_method", {
             enumerable: true,
             configurable: true,
             writable: true,
-            value: METHOD.GET
+            value: "GET"
         });
         Object.defineProperty(this, "_path", {
             enumerable: true,
@@ -91,6 +96,20 @@ var ApiRequest = /** @class */ (function () {
         writable: true,
         value: function (path) {
             this._path = path;
+            return this;
+        }
+    });
+    /**
+     * Set Base URL For this API
+     *
+     * @param url
+     */
+    Object.defineProperty(ApiRequest.prototype, "setBaseURL", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (url) {
+            this._base_url = url;
             return this;
         }
     });
@@ -191,7 +210,7 @@ var ApiRequest = /** @class */ (function () {
                 // @ts-ignore
                 headers[key] = _this._headers[key];
             });
-            var apiConfig = new ApiConfig();
+            var apiConfig = new ApiConfig(this._base_url);
             apiConfig.url = this._path;
             apiConfig.method = this._method;
             apiConfig.headers = headers;

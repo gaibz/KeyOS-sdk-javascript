@@ -3,7 +3,8 @@
  * @author : Herlangga Sefani <https://github.com/gaibz>
  */
 var ApiConfig = /** @class */ (function () {
-    function ApiConfig() {
+    function ApiConfig(baseUrl) {
+        if (baseUrl === void 0) { baseUrl = ''; }
         Object.defineProperty(this, "baseURL", {
             enumerable: true,
             configurable: true,
@@ -58,6 +59,7 @@ var ApiConfig = /** @class */ (function () {
             writable: true,
             value: function () { }
         });
+        this.baseURL = baseUrl || this.baseURL;
     }
     return ApiConfig;
 }());

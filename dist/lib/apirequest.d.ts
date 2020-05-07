@@ -2,8 +2,8 @@
  * @author : Herlangga Sefani <https://github.com/gaibz>
  */
 import ApiConfig = require('./apiconfig');
-import METHOD = require('./method.enum');
 declare class ApiRequest {
+    private _base_url;
     private _method;
     private _path;
     private _api_key;
@@ -29,6 +29,12 @@ declare class ApiRequest {
      */
     setPath(path: string): this;
     /**
+     * Set Base URL For this API
+     *
+     * @param url
+     */
+    setBaseURL(url: string): this;
+    /**
      * set request body for this api call
      * @param body object {key:value}
      */
@@ -42,7 +48,7 @@ declare class ApiRequest {
      * set method for this api call
      * @param method
      */
-    setMethod(method: METHOD): this;
+    setMethod(method: string): this;
     /**
      * set query parameter (typically in url) for this api call
      * @param query object {key:value}
