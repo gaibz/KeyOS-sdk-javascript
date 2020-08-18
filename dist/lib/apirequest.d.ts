@@ -12,6 +12,7 @@ declare class ApiRequest {
     /**
      * format any object into query string eg : {a:"b", c:"d"} will be a=b&c=d
      * @param data
+     * @param prefix
      * @private
      */
     private _toQueryString;

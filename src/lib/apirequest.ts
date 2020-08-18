@@ -18,10 +18,22 @@ class ApiRequest {
     /**
      * format any object into query string eg : {a:"b", c:"d"} will be a=b&c=d
      * @param data
+     * @param prefix
      * @private
      */
-    private _toQueryString(data : any) : string {
-        return Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
+    private _toQueryString(data : any, prefix : any = null) : string {
+        // return Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
+        let str = [], p;
+        for (p in data) {
+            if (data.hasOwnProperty(p)) {
+                let k = prefix ? prefix + "[" + p + "]" : p,
+                    v = data[p];
+                str.push((v !== null && typeof v === "object") ?
+                    this._toQueryString(v, k) :
+                    encodeURIComponent(k) + "=" + encodeURIComponent(v));
+            }
+        }
+        return str.join("&");
     }
 
     /**

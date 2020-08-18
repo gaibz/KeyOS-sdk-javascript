@@ -40,14 +40,26 @@ var ApiRequest = /** @class */ (function () {
     /**
      * format any object into query string eg : {a:"b", c:"d"} will be a=b&c=d
      * @param data
+     * @param prefix
      * @private
      */
     Object.defineProperty(ApiRequest.prototype, "_toQueryString", {
         enumerable: false,
         configurable: true,
         writable: true,
-        value: function (data) {
-            return Object.keys(data).map(function (key) { return key + "=" + encodeURIComponent(data[key]); }).join('&');
+        value: function (data, prefix) {
+            if (prefix === void 0) { prefix = null; }
+            // return Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
+            var str = [], p;
+            for (p in data) {
+                if (data.hasOwnProperty(p)) {
+                    var k = prefix ? prefix + "[" + p + "]" : p, v = data[p];
+                    str.push((v !== null && typeof v === "object") ?
+                        this._toQueryString(v, k) :
+                        encodeURIComponent(k) + "=" + encodeURIComponent(v));
+                }
+            }
+            return str.join("&");
         }
     });
     /**
