@@ -3,14 +3,19 @@
  * @author : Herlangga Sefani <https://github.com/gaibz>
  */
 var ApiConfig = require("./apiconfig");
-var METHOD = require("./method.enum");
 var ApiRequest = /** @class */ (function () {
     function ApiRequest() {
+        Object.defineProperty(this, "_base_url", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: ''
+        });
         Object.defineProperty(this, "_method", {
             enumerable: true,
             configurable: true,
             writable: true,
-            value: METHOD.GET
+            value: "GET"
         });
         Object.defineProperty(this, "_path", {
             enumerable: true,
@@ -35,6 +40,24 @@ var ApiRequest = /** @class */ (function () {
             configurable: true,
             writable: true,
             value: {}
+        });
+        Object.defineProperty(this, "_headers", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: {}
+        });
+        Object.defineProperty(this, "_form_type", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: "application/x-www-form-urlencoded"
+        });
+        Object.defineProperty(this, "_on_upload_progress", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: function () { }
         });
     }
     /**
@@ -63,6 +86,19 @@ var ApiRequest = /** @class */ (function () {
         }
     });
     /**
+     * set request headers
+     * @param headers
+     */
+    Object.defineProperty(ApiRequest.prototype, "setHeaders", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (headers) {
+            this._headers = headers;
+            return this;
+        }
+    });
+    /**
      * set path for api call
      * @param path
      */
@@ -76,6 +112,20 @@ var ApiRequest = /** @class */ (function () {
         }
     });
     /**
+     * Set Base URL For this API
+     *
+     * @param url
+     */
+    Object.defineProperty(ApiRequest.prototype, "setBaseURL", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (url) {
+            this._base_url = url;
+            return this;
+        }
+    });
+    /**
      * set request body for this api call
      * @param body object {key:value}
      */
@@ -85,6 +135,20 @@ var ApiRequest = /** @class */ (function () {
         writable: true,
         value: function (body) {
             this._body = body;
+            return this;
+        }
+    });
+    /**
+     * Set form data (for upload purposes)
+     * @param data
+     */
+    Object.defineProperty(ApiRequest.prototype, "setFormData", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (data) {
+            this._form_type = 'multipart/form-data';
+            this._body = data;
             return this;
         }
     });
@@ -128,6 +192,18 @@ var ApiRequest = /** @class */ (function () {
         }
     });
     /**
+     * on upload progress
+     */
+    Object.defineProperty(ApiRequest.prototype, "onUploadProgress", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (cb) {
+            this._on_upload_progress = cb;
+            return this;
+        }
+    });
+    /**
      * Get Config for fetch data
      */
     Object.defineProperty(ApiRequest.prototype, "getConfig", {
@@ -135,17 +211,34 @@ var ApiRequest = /** @class */ (function () {
         configurable: true,
         writable: true,
         value: function () {
+            var _this = this;
             var headers = {
                 'key': this._api_key,
                 'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': this._form_type
             };
-            var apiConfig = new ApiConfig();
+            Object.keys(this._headers).forEach(function (key) {
+                // dont know why this getting error ??
+                // @ts-ignore
+                headers[key] = _this._headers[key];
+            });
+            var apiConfig = new ApiConfig(this._base_url);
             apiConfig.url = this._path;
             apiConfig.method = this._method;
             apiConfig.headers = headers;
-            apiConfig.data = this._toQueryString(this._body);
+            if (this._form_type !== 'multipart/form-data') {
+                if (typeof this._body === 'object') {
+                    apiConfig.data = this._toQueryString(this._body);
+                }
+                else if (typeof this._body === 'string') {
+                    apiConfig.data = this._body;
+                }
+            }
+            else {
+                apiConfig.data = this._body;
+            }
             apiConfig.params = this._query;
+            apiConfig.onUploadProgress = this._on_upload_progress;
             return apiConfig;
         }
     });

@@ -28,12 +28,12 @@ var Api = /** @class */ (function () {
         value: function (response, resolve, reject) {
             var resp = {
                 status: {
-                    code: response.status,
-                    text: response.statusText
+                    code: response.status || null,
+                    text: response.statusText || null
                 },
-                body: response.data,
-                _request: response.request,
-                _headers: response.headers,
+                body: response.data || null,
+                _request: response.request || null,
+                _headers: response.headers || null,
                 getBody: function () {
                     return this.body;
                 },
@@ -61,14 +61,15 @@ var Api = /** @class */ (function () {
         configurable: true,
         writable: true,
         value: function (error, reject) {
+            error.response = error.response || {};
             var err = {
                 status: {
-                    code: error.response.status,
-                    text: error.response.statusText,
+                    code: error.response.status || null,
+                    text: error.response.statusText || null,
                 },
-                body: error.response.data,
-                _request: error.response.request,
-                _headers: error.response.headers,
+                body: error.response.data || null,
+                _request: error.response.request || null,
+                _headers: error.response.headers || null,
                 getBody: function () {
                     return this.body;
                 },
@@ -79,11 +80,21 @@ var Api = /** @class */ (function () {
                     return this.status.text;
                 }
             };
-            if (err.body === '') {
-                err.body = {
-                    success: false,
-                    message: "Something goes wrong",
-                };
+            if (!err.body) {
+                if (err.status.code === 404) {
+                    err.body = {
+                        success: false,
+                        message: "Not Found",
+                        error_code: "not_found"
+                    };
+                }
+                else {
+                    err.body = {
+                        success: false,
+                        message: "Something goes wrong",
+                        error_code: "something_goes_wrong"
+                    };
+                }
             }
             reject(err);
         }

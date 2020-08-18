@@ -3,17 +3,21 @@
  */
 
 import ApiConfig = require('./apiconfig');
-import METHOD = require('./method.enum');
 
 class ApiRequest {
+    private _base_url = '';
 
-    private _method : METHOD = METHOD.GET;
+    private _method : string = "GET";
 
     private _path : string = "";
     private _api_key : string = "";
 
-    private _body : object = {};
-    private _query : object = {};
+    private _body : any = {};
+    private _query = {};
+    private _headers : object = {};
+
+    private _form_type: string = "application/x-www-form-urlencoded";
+    private _on_upload_progress : any = () => {};
 
     /**
      * format any object into query string eg : {a:"b", c:"d"} will be a=b&c=d
@@ -37,6 +41,15 @@ class ApiRequest {
     }
 
     /**
+     * set request headers
+     * @param headers
+     */
+    public setHeaders(headers : object) : this {
+        this._headers = headers;
+        return this;
+    }
+
+    /**
      * set path for api call
      * @param path
      */
@@ -46,11 +59,31 @@ class ApiRequest {
     }
 
     /**
+     * Set Base URL For this API
+     *
+     * @param url
+     */
+    public setBaseURL(url:string) : this {
+        this._base_url = url;
+        return this;
+    }
+
+    /**
      * set request body for this api call
      * @param body object {key:value}
      */
-    public setRequestBody(body:object) : this {
+    public setRequestBody(body : any) : this {
         this._body = body;
+        return this;
+    }
+
+    /**
+     * Set form data (for upload purposes)
+     * @param data 
+     */
+    public setFormData(data : FormData) : this {
+        this._form_type = 'multipart/form-data';
+        this._body = data;
         return this;
     }
 
@@ -58,7 +91,7 @@ class ApiRequest {
      * set method for this api call
      * @param method
      */
-    public setMethod(method:METHOD) : this {
+    public setMethod(method:string) : this {
         this._method = method;
         return this;
     }
@@ -82,21 +115,47 @@ class ApiRequest {
     }
 
     /**
+     * on upload progress
+     */
+    public onUploadProgress(cb : any) : this {
+        this._on_upload_progress = cb;
+        return this;
+    } 
+
+    /**
      * Get Config for fetch data
      */
     public getConfig() : ApiConfig {
         let headers = {
             'key' : this._api_key,
             'Accept' : 'application/json',
-            'Content-Type' : 'application/x-www-form-urlencoded'
+            'Content-Type' : this._form_type
         };
 
-        let apiConfig = new ApiConfig();
+        Object.keys(this._headers).forEach((key) => {
+            // dont know why this getting error ??
+            // @ts-ignore
+            headers[key] = this._headers[key];
+        });
+
+        let apiConfig = new ApiConfig(this._base_url);
         apiConfig.url = this._path;
         apiConfig.method = this._method;
         apiConfig.headers = headers;
-        apiConfig.data = this._toQueryString(this._body);
+        if(this._form_type !== 'multipart/form-data') {
+            if (typeof this._body === 'object') {
+                apiConfig.data = this._toQueryString(this._body);
+            }
+            else if (typeof this._body === 'string') {
+                apiConfig.data = this._body;
+            }
+        }
+        else {
+            apiConfig.data = this._body;
+        }
+
         apiConfig.params = this._query;
+        apiConfig.onUploadProgress = this._on_upload_progress;
 
         return apiConfig;
     }

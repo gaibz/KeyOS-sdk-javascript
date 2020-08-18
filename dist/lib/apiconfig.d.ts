@@ -5,10 +5,12 @@ declare class ApiConfig {
     private baseURL;
     method: string;
     headers: object;
-    data: string;
+    data: any;
     params: object;
     url: string;
     responseType: string;
     timeout: number;
+    onUploadProgress: any;
+    constructor(baseUrl?: string);
 }
 export = ApiConfig;
