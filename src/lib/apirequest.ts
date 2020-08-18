@@ -25,12 +25,12 @@ class ApiRequest {
      * @param prefix
      * @private
      */
-    private _toQueryString(data : any, prefix : any = null) : string {
+    public _toQueryString(data : any, prefix : any = null) : string {
         // return Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
         let str = [], p;
         for (p in data) {
             if (data.hasOwnProperty(p)) {
-                let k = prefix ? prefix + "[" + p + "]" : p,
+                let k = prefix ? prefix + "[" + "]" : p,
                     v = data[p];
                 str.push((v !== null && typeof v === "object") ?
                     this._toQueryString(v, k) :

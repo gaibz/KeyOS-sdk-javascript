@@ -18,7 +18,7 @@ declare class ApiRequest {
      * @param prefix
      * @private
      */
-    private _toQueryString;
+    _toQueryString(data: any, prefix?: any): string;
     /**
      * set request headers
      * @param headers

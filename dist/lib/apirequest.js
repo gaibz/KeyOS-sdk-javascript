@@ -76,7 +76,7 @@ var ApiRequest = /** @class */ (function () {
             var str = [], p;
             for (p in data) {
                 if (data.hasOwnProperty(p)) {
-                    var k = prefix ? prefix + "[" + p + "]" : p, v = data[p];
+                    var k = prefix ? prefix + "[" + "]" : p, v = data[p];
                     str.push((v !== null && typeof v === "object") ?
                         this._toQueryString(v, k) :
                         encodeURIComponent(k) + "=" + encodeURIComponent(v));
