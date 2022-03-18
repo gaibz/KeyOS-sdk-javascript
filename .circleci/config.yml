@@ -41,7 +41,7 @@ jobs:
           at: ~/repo
       - run:
           name: Build Typescript
-          command: npx tsc
+          command: npx tsc --build
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
