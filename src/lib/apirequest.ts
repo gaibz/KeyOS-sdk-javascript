@@ -15,6 +15,7 @@ class ApiRequest {
     private _body : any = {};
     private _query = {};
     private _headers : object = {};
+    private _is_raw_request : boolean = false;
 
     private _form_type: string = "application/x-www-form-urlencoded";
     private _on_upload_progress : any = () => {};
@@ -78,8 +79,27 @@ class ApiRequest {
     }
 
     /**
+     * Set Raw request, True = for unformatted request in example for sending JSON etc.
+     * Default False
+     * @param raw
+     */
+    public setRawRequest(raw : boolean) : this {
+        this._is_raw_request = raw;
+        return this;
+    }
+
+    /**
+     * Set Header Form Type ex : multipart/form-data
+     * @param form_type
+     */
+    public setFormType(form_type : string) : this {
+        this._form_type = form_type;
+        return this;
+    }
+
+    /**
      * Set form data (for upload purposes)
-     * @param data 
+     * @param data
      */
     public setFormData(data : FormData) : this {
         this._form_type = 'multipart/form-data';
@@ -120,7 +140,7 @@ class ApiRequest {
     public onUploadProgress(cb : any) : this {
         this._on_upload_progress = cb;
         return this;
-    } 
+    }
 
     /**
      * Get Config for fetch data
@@ -142,7 +162,7 @@ class ApiRequest {
         apiConfig.url = this._path;
         apiConfig.method = this._method;
         apiConfig.headers = headers;
-        if(this._form_type !== 'multipart/form-data') {
+        if(this._form_type !== 'multipart/form-data' && !this._is_raw_request) {
             if (typeof this._body === 'object') {
                 apiConfig.data = this._toQueryString(this._body);
             }
