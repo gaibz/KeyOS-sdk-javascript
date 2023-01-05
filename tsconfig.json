@@ -1,34 +1,35 @@
 {
-  "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "target": "ES5",
-    "sourceMap": true,
-    "outDir": "dist",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "useDefineForClassFields": true,
-    "alwaysStrict": true,
-    "esModuleInterop": true,
-    "declaration": true,
-    "watch": true,
-    "lib": [
-      "dom",
-      "es5",
-      "scripthost"
-//      "es2015.promise"
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "target": "ES5",
+        "sourceMap": true,
+        "outDir": "dist",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "useDefineForClassFields": true,
+        "alwaysStrict": true,
+        "esModuleInterop": true,
+        "declaration": true,
+        "watch": true,
+        "noEmit": true,
+        "lib": [
+            "dom",
+            "es5",
+            "scripthost"
+            //      "es2015.promise"
+        ]
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "rest"
     ]
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "rest"
-  ]
 }

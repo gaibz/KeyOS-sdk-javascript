@@ -47,6 +47,12 @@ var ApiRequest = /** @class */ (function () {
             writable: true,
             value: {}
         });
+        Object.defineProperty(this, "_is_raw_request", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: false
+        });
         Object.defineProperty(this, "_form_type", {
             enumerable: true,
             configurable: true,
@@ -139,6 +145,33 @@ var ApiRequest = /** @class */ (function () {
         }
     });
     /**
+     * Set Raw request, True = for unformatted request in example for sending JSON etc.
+     * Default False
+     * @param raw
+     */
+    Object.defineProperty(ApiRequest.prototype, "setRawRequest", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (raw) {
+            this._is_raw_request = raw;
+            return this;
+        }
+    });
+    /**
+     * Set Header Form Type ex : multipart/form-data
+     * @param form_type
+     */
+    Object.defineProperty(ApiRequest.prototype, "setFormType", {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function (form_type) {
+            this._form_type = form_type;
+            return this;
+        }
+    });
+    /**
      * Set form data (for upload purposes)
      * @param data
      */
@@ -226,7 +259,7 @@ var ApiRequest = /** @class */ (function () {
             apiConfig.url = this._path;
             apiConfig.method = this._method;
             apiConfig.headers = headers;
-            if (this._form_type !== 'multipart/form-data') {
+            if (this._form_type !== 'multipart/form-data' && !this._is_raw_request) {
                 if (typeof this._body === 'object') {
                     apiConfig.data = this._toQueryString(this._body);
                 }

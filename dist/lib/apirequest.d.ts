@@ -10,6 +10,7 @@ declare class ApiRequest {
     private _body;
     private _query;
     private _headers;
+    private _is_raw_request;
     private _form_type;
     private _on_upload_progress;
     /**
@@ -40,6 +41,17 @@ declare class ApiRequest {
      * @param body object {key:value}
      */
     setRequestBody(body: any): this;
+    /**
+     * Set Raw request, True = for unformatted request in example for sending JSON etc.
+     * Default False
+     * @param raw
+     */
+    setRawRequest(raw: boolean): this;
+    /**
+     * Set Header Form Type ex : multipart/form-data
+     * @param form_type
+     */
+    setFormType(form_type: string): this;
     /**
      * Set form data (for upload purposes)
      * @param data
