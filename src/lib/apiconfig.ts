@@ -11,7 +11,7 @@ class ApiConfig {
     public params : object = {};
     public url : string = "";
     public responseType : string = "";
-    public timeout : number = 10000; // 10 seconds
+    public timeout : number = 0; // 10 seconds
     public onUploadProgress : any = () => {};
 
     constructor(baseUrl : string = '') {
