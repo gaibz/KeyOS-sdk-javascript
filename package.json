@@ -1,6 +1,6 @@
 {
   "name": "@keyos/api-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "KeyOS API SDK For Javascript",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "author": "Herlangga Sefani <https://github.com/gaibz>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "1.6.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.5",
