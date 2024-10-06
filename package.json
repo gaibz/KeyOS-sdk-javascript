@@ -15,7 +15,7 @@
   "author": "Herlangga Sefani <https://github.com/gaibz>",
   "license": "MIT",
   "dependencies": {
-    "axios": "1.6.0"
+    "axios": "1.7.4"
   },
   "devDependencies": {
     "@types/node": "^13.13.5",
