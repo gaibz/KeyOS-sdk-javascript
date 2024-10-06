@@ -51,7 +51,7 @@ var ApiConfig = /** @class */ (function () {
             enumerable: true,
             configurable: true,
             writable: true,
-            value: 10000
+            value: 0
         }); // 10 seconds
         Object.defineProperty(this, "onUploadProgress", {
             enumerable: true,
