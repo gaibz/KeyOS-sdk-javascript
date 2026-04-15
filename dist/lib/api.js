@@ -143,7 +143,7 @@ var Api = /** @class */ (function () {
                 }
                 var config = {
                     baseURL: 'https://api.keyos.id/rest',
-                    timeout: 10000,
+                    timeout: 60000,
                     headers: headers,
                     url: path,
                     method: method,

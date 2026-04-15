@@ -136,7 +136,7 @@ class Api {
 
             let config = {
                 baseURL : 'https://api.keyos.id/rest',
-                timeout : 40000,
+                timeout : 60000,
                 headers,
                 url: path,
                 method: method,
